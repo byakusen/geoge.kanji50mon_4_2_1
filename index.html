@@ -89,7 +89,6 @@ button{font-family:inherit;color:inherit}
 .count{font-weight:800;font-size:clamp(15px,2.5vh,20px);font-variant-numeric:tabular-nums;white-space:nowrap}
 
 .panel{flex:1;min-height:0;position:relative;display:flex;padding:clamp(12px,2.5vh,26px)}
-.qno{position:absolute;top:10px;left:16px;font-weight:800;color:var(--mc);font-size:clamp(14px,2.2vh,18px)}
 
 .foot{display:flex;gap:10px;justify-content:space-between}
 .foot .btn{flex:1;max-width:240px;padding:.75em .6em}
@@ -601,12 +600,11 @@ function render(){
   $('prev').disabled=S.pos===0;
   $('next').textContent=S.pos===n-1?'けっか ▶':'つぎ ▶';
   const panel=$('panel');
-  const qno=`<div class="qno">${idx+1}もんめ</div>`;
 
   if(S.mode==='write'){
     const open=!!S.open[idx];
     const clues=q.c.map((c,j)=>`<li data-n="${j+1}"><span>${esc(c).replace(/□\{(.+?)\}/g,(_,y)=>`<ruby class="bk"><span class="blank${open?' on':''}" data-k="${q.k}"></span><rt>${y}</rt></ruby>`)}</span></li>`).join('');
-    panel.innerHTML=`${qno}<div class="wgrid">
+    panel.innerHTML=`<div class="wgrid">
       <ul class="clues">${clues}</ul>
       <div class="wans">
         <div class="bigbox" aria-label="答えのわく">${open?'<div class="kanim" id="kanim"></div>':''}</div>
@@ -630,7 +628,7 @@ function render(){
       const rt=tg?(open?`（<span class="yomi">${q.r}</span>）`:'（<span class="sp"></span>）'):'';
       return `<div class="col${tg?' tg':''}"><div class="rt">${rt}</div><div class="ch">${ch}</div></div>`;
     }).join('');
-    panel.innerHTML=`${qno}<div class="rwrap">
+    panel.innerHTML=`<div class="rwrap">
       <div class="word" aria-label="${esc(q.w)}">${chars}</div>
       <div class="rbtns">
         ${open?`<button class="btn say" type="button" id="say">${SPEAK_SVG}もう一度きく</button>${chk('読めた！',idx)}`
@@ -656,7 +654,7 @@ function render(){
     let fb='';
     if(picked!==undefined)fb=picked===right?'<p class="ofb ok">せいかい！</p>':`<p class="ofb ng">正しくは「${esc(right)}」</p>`;
     else fb='<p class="ofb" style="color:var(--sub)">正しい送りがなをえらぼう</p>';
-    panel.innerHTML=`${qno}<div class="owrap">
+    panel.innerHTML=`<div class="owrap">
       <div class="osent">${sent}</div>
       <div class="opts" id="opts">${opts}</div>${fb}</div>`;
     $('check').hidden=true;
